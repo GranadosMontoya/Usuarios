@@ -33,11 +33,13 @@ DJANGO_APPS = (
     'django.contrib.staticfiles',
 )
 
-LOCAL_APPS = ()
+LOCAL_APPS = (
+    'aplicaciones.users',
+)
 
 THIRD_APPS = ()
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS +THIRD_APPS
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,6 +86,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
