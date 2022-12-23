@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
+from .managers import UserMAnager
+
 # Create your models here.
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -13,10 +15,17 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     username = models.CharField(max_length=50, unique=True)
     email = models.EmailField()
-    nombres = models.CharField(max_length=30)
-    apellidos = models.CharField(max_length=30)
+    nombres = models.CharField(max_length=30, blank=True)
+    apellidos = models.CharField(max_length=30,blank=True)
     genero = models.CharField(max_length=1, choices=GENDER_CHOCICES, blank=True)
+    #
+    is_staff = models.BooleanField(default=False)
+
     USERNAME_FIELD = 'username'
+
+    REQUIRED_FIELDS = ['email',]
+
+    objects = UserMAnager()
     
     def get_short_name(self):
         return self.username
@@ -32,4 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         """Unicode representation of User."""
-        pass
+        if self.username.isalnum():
+            return str(self.id) + '---' + self.username
+        else:
+            return str(self.id) + '---' + self.nombres
